@@ -1,3 +1,6 @@
+setuptools>=67
+wheel>=0.40
+pip>=23
 setuptools>=61
 wheel
 pip
