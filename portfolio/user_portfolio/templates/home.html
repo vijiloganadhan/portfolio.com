@@ -1,0 +1,214 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+  }
+
+  .auth-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 25px 0;
+  }
+
+  .auth-links a {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .auth-links a:hover {
+    background-color: #388e3c;
+  }
+
+  .portfolio-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    padding: 0 20px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .profile-section {
+    background: #fff;
+    border-radius: 12px;
+    width: 300px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+  }
+
+  .profile-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .profile-section img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #3f51b5;
+    margin-bottom: 15px;
+  }
+
+  .profile-section h1 {
+    font-size: 20px;
+    color: #2c3e50;
+    margin-bottom: 5px;
+  }
+
+  .profile-section p,
+  .profile-section h3,
+  .profile-section h2 {
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    margin: 6px 0;
+    word-break: break-word;
+  }
+
+  .typed-container {
+    font-size: 13px;
+    font-weight: bold;
+    color: #e91e63;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .view-link {
+    margin-top: 12px;
+  }
+
+  .view-link a {
+    background-color: #e91e63;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .view-link a:hover {
+    background-color: #c2185b;
+  }
+
+  .share-button {
+    background-color: #2196f3;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+  }
+
+  .share-button:hover {
+    background-color: #1976d2;
+  }
+
+  @media (max-width: 600px) {
+    .portfolio-container {
+      padding: 10px;
+      gap: 15px;
+    }
+
+    .profile-section {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="auth-links">
+  {% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}">Logout</a>
+  {% else %}
+    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'signup' %}">Signup</a>
+  {% endif %}
+  <a href="{% url 'create' %}">+ Create</a>
+</div>
+
+<div class="portfolio-container">
+  {% if portfolio %}
+    {% for i in portfolio %}
+      <div class="profile-section">
+        {% if i.image %}
+          <img src="{{ i.image.url }}" alt="{{ i.name }} image not found">
+        {% endif %}
+        <h1>{{ i.name }}</h1>
+        <div class="typed-container">
+          <span class="typed" id="typed-{{ forloop.counter }}"></span>
+        </div>
+        <p><b>{{ i.email }}</b></p>
+        <h3>Age: {{ i.age }}</h3>
+        <p><strong>Address:</strong> {{ i.address }}</p>
+        <div class="view-link">
+          <a href="{% url 'view' i.id %}">View Portfolio</a>
+        </div>
+      <button class="share-button" data-url="{% url 'view' i.id %}" onclick="sharePortfolio(this.dataset.url)">🔗 Share</button>
+
+
+
+      </div>
+    {% endfor %}
+  {% else %}
+    <p style="text-align:center;">No portfolios to display.</p>
+  {% endif %}
+</div>
+
+<!-- Typed.js Animation Script -->
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+  document.querySelectorAll(".typed").forEach((el, index) => {
+    new Typed(`#typed-${index + 1}`, {
+      strings: [
+        'Python Fullstack Developer',
+        'Skills include:',
+        'Python', 'Django', 'HTML', 'CSS', 'JavaScript', 'SQL', 'Figma'
+      ],
+      typeSpeed: 40,
+      backSpeed: 20,
+      backDelay: 1500,
+      loop: true
+    });
+  });
+
+  function sharePortfolio(path) {
+    const fullUrl = window.location.origin + path;
+
+    if (navigator.share) {
+      navigator.share({
+        title: 'Check out this portfolio',
+        text: 'Here is a great portfolio!',
+        url: fullUrl
+      })
+      .then(() => console.log('Shared successfully'))
+      .catch((error) => console.log('Error sharing:', error));
+    } else {
+      navigator.clipboard.writeText(fullUrl);
+      alert('Link copied to clipboard!');
+    }
+  }
+</script>
+
+{% endblock %}

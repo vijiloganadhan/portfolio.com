@@ -1,0 +1,251 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+  }
+
+  .form-container {
+    max-width: 960px;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  }
+
+  h2 {
+    text-align: center;
+    color: #1e3a8a;
+    margin-bottom: 30px;
+  }
+
+  h3, h4 {
+    color: #1d4ed8;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #dbeafe;
+    padding-bottom: 5px;
+  }
+
+  label {
+    display: block;
+    margin-top: 16px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="url"],
+  input[type="file"],
+  input[type="date"],
+  textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  input[type="file"] {
+    background-color: #f9fafb;
+  }
+
+  input:focus, textarea:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  ul li {
+    background-color: #eff6ff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 5px 0;
+    color: #1e40af;
+  }
+
+  img, video {
+    margin-top: 10px;
+    max-width: 160px;
+    max-height: 100px;
+    border-radius: 10px;
+    display: block;
+  }
+
+  button[type="submit"] {
+    margin-top: 30px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #1d4ed8;
+  }
+
+  @media (max-width: 600px) {
+    .form-container {
+      padding: 20px;
+    }
+  }
+</style>
+
+<div class="form-container">
+  <h2>Edit Portfolio</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <h3>Basic Info</h3>
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ port.name }}">
+
+    <label>Age:</label>
+    <input type="number" name="age" value="{{ port.age }}">
+
+    <label>Email:</label>
+    <input type="email" name="email" value="{{ port.email }}">
+
+    <label>Address:</label>
+    <input type="text" name="add" value="{{ port.address }}">
+
+    <label>Image:</label>
+    <input type="file" name="image">
+    {% if port.image %}
+      <img src="{{ port.image.url }}" alt="Portfolio Image">
+    {% endif %}
+
+    <h3>Education</h3>
+    <h4>Higher Education</h4>
+    <label>College Name:</label>
+    <input type="text" name="cname" value="{{ port.higher_education.college_name }}">
+
+    <label>Start:</label>
+    <input type="date" name="cstart" value="{{ port.higher_education.start|date:'Y-m-d' }}">
+
+    <label>End:</label>
+    <input type="date" name="cend" value="{{ port.higher_education.end|date:'Y-m-d' }}">
+
+    <label>Address:</label>
+    <input type="text" name="cadd" value="{{ port.higher_education.address }}">
+
+    <label>Description:</label>
+    <textarea name="cdesc">{{ port.higher_education.desc }}</textarea>
+
+    <label>Marks:</label>
+    <input type="text" name="cmarks" value="{{ port.higher_education.marks }}">
+
+    <h4>Intermediate</h4>
+    <label>School Name:</label>
+    <input type="text" name="iname" value="{{ port.inter.inter_name }}">
+
+    <label>Start:</label>
+    <input type="date" name="istart" value="{{ port.inter.start|date:'Y-m-d' }}">
+
+    <label>End:</label>
+    <input type="date" name="iend" value="{{ port.inter.end|date:'Y-m-d' }}">
+
+    <label>Address:</label>
+    <input type="text" name="iadd" value="{{ port.inter.address }}">
+
+    <label>Description:</label>
+    <textarea name="idesc">{{ port.inter.desc }}</textarea>
+
+    <label>Marks:</label>
+    <input type="text" name="imarks" value="{{ port.inter.marks }}">
+
+    <h4>School</h4>
+    <label>School Name:</label>
+    <input type="text" name="sname" value="{{ port.school.school }}">
+
+    <label>Start:</label>
+    <input type="date" name="sstart" value="{{ port.school.start|date:'Y-m-d' }}">
+
+    <label>End:</label>
+    <input type="date" name="send" value="{{ port.school.end|date:'Y-m-d' }}">
+
+    <label>Address:</label>
+    <input type="text" name="sadd" value="{{ port.school.address }}">
+
+    <label>Description:</label>
+    <textarea name="sdesc">{{ port.school.desc }}</textarea>
+
+    <label>Marks:</label>
+    <input type="text" name="smarks" value="{{ port.school.marks }}">
+
+    <h3>Languages & Skills</h3>
+    <h4>Languages</h4>
+    <ul>
+      {% for lang in port.language.all %}
+        <li>{{ lang.lname }}</li>
+      {% empty %}
+        <li>No languages added.</li>
+      {% endfor %}
+    </ul>
+    <label>Add New Language:</label>
+    <input type="text" name="lname">
+
+    <h4>Skills</h4>
+    <ul>
+      {% for skill in port.skills.all %}
+        <li>{{ skill.ssname }}</li>
+      {% empty %}
+        <li>No skills added.</li>
+      {% endfor %}
+    </ul>
+    <label>Add New Skill:</label>
+    <input type="text" name="ssname">
+
+    <h3>Projects</h3>
+    <label>Project Name:</label>
+    <input type="text" name="pname" value="{{ port.project.pname }}">
+
+    <label>Upload New Image/Video:</label>
+    <input type="file" name="piv">
+    {% if port.project.pimage_or_video %}
+      <video controls>
+        <source src="{{ port.project.pimage_or_video.url }}">
+        Your browser does not support the video tag.
+      </video>
+    {% endif %}
+
+    <label>Description:</label>
+    <textarea name="desc">{{ port.project.pdesc }}</textarea>
+
+    <h3>Other</h3>
+    <label>Hobbies:</label>
+    <input type="text" name="hobbies" value="{{ port.hobbies }}">
+
+    <label>GitHub Link:</label>
+    <input type="url" name="github" value="{{ port.github }}">
+
+    <label>LinkedIn Link:</label>
+    <input type="url" name="linkidin" value="{{ port.linkidin }}">
+
+    <button type="submit">Update Portfolio</button>
+  </form>
+</div>
+{% endblock %}

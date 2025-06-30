@@ -1,0 +1,314 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #f4f6f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+
+  #main-container {
+    max-width: 960px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    padding: 40px 30px;
+  }
+
+  #profile-section {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  #profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #3f51b5;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  #profile-name {
+    font-size: 30px;
+    color: #3f51b5;
+    margin: 10px 0 5px;
+  }
+
+  #typed {
+    font-size: 18px;
+    font-weight: 500;
+    color: #e91e63;
+  }
+
+  #section-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 2px solid #d0d0d0;
+    padding-bottom: 8px;
+  }
+
+  #education-section > div {
+    background: #f9fafb;
+    border-left: 6px solid #3f51b5;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+
+  #education-section h2 {
+    color: #3f51b5;
+    margin-bottom: 5px;
+  }
+
+  #education-section h3, 
+  #education-section h5 {
+    margin: 5px 0;
+  }
+
+  #project-section {
+    margin-top: 40px;
+  }
+
+  #project-video {
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    margin-top: 15px;
+  }
+
+  #lang-skill-section ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+  }
+
+  #lang-skill-section li {
+    background-color: #e3f2fd;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    color: #333;
+    font-weight: 500;
+  }
+
+  #hobby-section {
+    margin-top: 40px;
+  }
+
+  a[target="_blank"] {
+    display: inline-block;
+    background: #3f51b5;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    margin: 10px 10px 0 0;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+
+  a[target="_blank"]:hover {
+    background: #2c387e;
+  }
+
+  #delete-link {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  #delete-link a {
+    padding: 12px 25px;
+    background-color: #e53935;
+    color: #fff;
+    margin: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+  }
+
+  #delete-link a:hover {
+    background-color: #b71c1c;
+  }
+
+  #delete-link a:last-child {
+    background-color: #4caf50;
+  }
+
+  #delete-link a:last-child:hover {
+    background-color: #388e3c;
+  }
+
+  nav {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+
+  nav a {
+    color: #3f51b5;
+    font-weight: 600;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+  }
+
+  nav a:hover {
+    color: #e91e63;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 600px) {
+    #main-container {
+      padding: 25px 15px;
+      margin: 20px;
+    }
+
+    #profile-image {
+      width: 120px;
+      height: 120px;
+    }
+
+    #profile-name {
+      font-size: 24px;
+    }
+
+    #typed {
+      font-size: 16px;
+    }
+
+    nav a {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    a[target="_blank"] {
+      display: block;
+      margin-bottom: 10px;
+    }
+  }
+</style>
+
+<nav>
+  <a href="#education-section">🎓 Education</a>
+  <a href="#project-section">💼 Projects</a>
+  <a href="#lang-skill-section">🗣️ Languages & Skills</a>
+  <a href="#hobby-section">🎯 Hobbies</a>
+</nav>
+
+{% if port %}
+<div id="main-container">
+
+  <div id="profile-section">
+    {% if port.image %}
+      <img id="profile-image" src="{{ port.image.url }}" alt="{{ port.name }} image not found">
+    {% endif %}
+    <h1 id="profile-name">{{ port.name }}</h1>
+    <p><span id="typed"></span></p>
+    <h2>{{ port.email }}</h2>
+    <h3>Age: {{ port.age }}</h3>
+    <p><strong>Address:</strong> {{ port.address }}</p>
+  </div>
+
+  <div id="education-section">
+    <h1 id="section-title">Educational Details</h1>
+
+    <div>
+      <h2>Higher Education</h2>
+      <h3>{{ port.higher_education.college_name }}</h3>
+      <h5>Start: {{ port.higher_education.start }} - End: {{ port.higher_education.end }}</h5>
+      <p>{{ port.higher_education.desc }}</p>
+      <p>{{ port.higher_education.address }}</p>
+      <h3>Marks: {{ port.higher_education.marks }}</h3>
+    </div>
+
+    <div>
+      <h2>Intermediate</h2>
+      <h3>{{ port.inter.inter_name }}</h3>
+      <h5>Start: {{ port.inter.start }} - End: {{ port.inter.end }}</h5>
+      <p>{{ port.inter.desc }}</p>
+      <p>{{ port.inter.address }}</p>
+      <h3>Marks: {{ port.inter.marks }}</h3>
+    </div>
+
+    <div>
+      <h2>Secondary</h2>
+      <h3>{{ port.school.school }}</h3>
+      <h5>Start: {{ port.school.start }} - End: {{ port.school.end }}</h5>
+      <p>{{ port.school.desc }}</p>
+      <p>{{ port.school.address }}</p>
+      <h3>Marks: {{ port.school.marks }}</h3>
+    </div>
+  </div>
+
+  <div id="project-section">
+    <h1 id="section-title">Projects</h1>
+    <h2>{{ port.project.pname }}</h2>
+    <p>{{ port.project.pdesc }}</p>
+    <video id="project-video" src="{{ port.project.pimage_or_video.url }}" controls></video>
+  </div>
+
+  <div id="lang-skill-section">
+    <h1 id="section-title">Languages</h1>
+    <ul>
+      {% for lang in port.language.all %}
+        <li>{{ lang.lname }}</li>
+      {% empty %}
+        <li>No languages added.</li>
+      {% endfor %}
+    </ul>
+
+    <h1 id="section-title">Skills</h1>
+    <ul>
+      {% for skill in port.skills.all %}
+        <li>{{ skill.ssname }}</li>
+      {% empty %}
+        <li>No skills listed.</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div id="hobby-section">
+    <h1 id="section-title">Hobbies</h1>
+    <p>{{ port.hobbies }}</p>
+  </div>
+
+  <h2>Social Profiles</h2>
+  {% if port.github %}
+    <a href="{{ port.github }}" target="_blank">🔗 GitHub</a>
+  {% endif %}
+  {% if port.linkidin %}
+    <a href="{{ port.linkidin }}" target="_blank">🔗 LinkedIn</a>
+  {% endif %}
+
+  <div id="delete-link">
+    <a href="{% url 'delete' port.id %}">Delete Portfolio</a>
+    <a href="{% url 'edit' port.id %}">Edit Portfolio</a>
+  </div>
+
+</div>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+  var typed = new Typed('#typed', {
+    strings: [
+      'Python Fullstack Developer',
+      'Skills: Django, HTML, CSS, JavaScript, SQL, Figma',
+      'Enthusiastic Problem Solver 💡'
+    ],
+    typeSpeed: 40,
+    backSpeed: 20,
+    loop: true
+  });
+</script>
+
+{% endblock content %}

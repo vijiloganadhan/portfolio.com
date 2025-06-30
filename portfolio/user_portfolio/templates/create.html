@@ -1,0 +1,166 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+  }
+
+  #form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  form label {
+    display: block;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="number"],
+  form input[type="date"],
+  form input[type="file"],
+  form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  form input[type="submit"] {
+    margin-top: 30px;
+    background-color: #3f51b5;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+
+  form input[type="submit"]:hover {
+    background-color: #2c387e;
+  }
+
+  h2 {
+    margin-top: 40px;
+    font-size: 20px;
+    color: #3f51b5;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 5px;
+  }
+
+  hr {
+    margin: 30px 0;
+    border: 0;
+    border-top: 1px solid #ccc;
+  }
+</style>
+
+<div id="form-container">
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <h2>Basic Details</h2>
+    <label>Name</label>
+    <input type="text" name="name">
+
+    <label>Image</label>
+    <input type="file" name="image">
+
+    <label>Age</label>
+    <input type="number" name="age">
+
+    <label>Email</label>
+    <input type="email" name="email">
+
+    <label>Address</label>
+    <textarea name="add"></textarea>
+
+    <h2>Educational Details</h2>
+    <h3>Higher Education</h3>
+    <label>College Name</label>
+    <input type="text" name="cname">
+    <label>Start Date</label>
+    <input type="date" name="cstart">
+    <label>End Date</label>
+    <input type="date" name="cend">
+    <label>Description</label>
+    <textarea name="cdesc"></textarea>
+    <label>Marks</label>
+    <input type="text" name="cmarks">
+    <label>Address</label>
+    <textarea name="cadd"></textarea>
+
+    <h3>Intermediate</h3>
+    <label>College Name</label>
+    <input type="text" name="iname">
+    <label>Start Date</label>
+    <input type="date" name="istart">
+    <label>End Date</label>
+    <input type="date" name="iend">
+    <label>Description</label>
+    <textarea name="idesc"></textarea>
+    <label>Marks</label>
+    <input type="text" name="imarks">
+    <label>Address</label>
+    <textarea name="iadd"></textarea>
+
+    <h3>Secondary School</h3>
+    <label>School Name</label>
+    <input type="text" name="sname">
+    <label>Start Date</label>
+    <input type="date" name="sstart">
+    <label>End Date</label>
+    <input type="date" name="send">
+    <label>Description</label>
+    <textarea name="sdesc"></textarea>
+    <label>Marks</label>
+    <input type="text" name="smarks">
+    <label>Address</label>
+    <textarea name="sadd"></textarea>
+
+    <h2>Project</h2>
+    <label>Project Name</label>
+    <input type="text" name="pname">
+    <label>Project Description</label>
+    <textarea name="desc"></textarea>
+    <label>Image / Video</label>
+    <input type="file" name="piv">
+
+    <h2>Other Details</h2>
+    <label>Language</label>
+    <input type="text" name="lname">
+    <label>Skills</label>
+    <input type="text" name="ssname">
+    <label>Hobbies</label>
+    <input type="text" name="hobbies">
+    <label for="">links </label>
+    <label for="">github</label>
+    <input type="url" name="github" id=""placeholder="https://github.com/yourusername">
+    <label for="">linkidin</label>
+    <input type="url" name="linkidin" id=""placeholder="https://linkedin.com/in/yourprofile">
+
+    <input type="submit" value="Create">
+  </form>
+</div>
+
+{% endblock content %}
