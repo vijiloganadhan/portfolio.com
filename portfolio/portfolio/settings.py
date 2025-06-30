@@ -126,3 +126,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import os
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media/')
+import os
+
+SECRET_KEY = os.environ.get('django-insecure-fd%$-tzt%*t)d_+kefm_%@znv0eu2gys=r*#batlrarzv_rs)+', 'unsafe')
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
