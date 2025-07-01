@@ -166,6 +166,6 @@ zipp==3.8.1
 zope.event==4.5.0
 zope.interface==5.5.2
 zstandard==0.23.0
+pip>=23.3.1
 setuptools>=68.0.0
-wheel
-
+wheel>=0.41.2
