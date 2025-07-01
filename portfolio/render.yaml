@@ -12,6 +12,8 @@ services:
       - key: ALLOWED_HOSTS
         value: portfolio.onrender.com
     autoDeploy: true
+    build:
+      pythonVersion: 3.12
     buildFilter:
       paths:
         - ./
