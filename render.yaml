@@ -14,6 +14,8 @@ services:
     autoDeploy: true
     build:
       pythonVersion: 3.12
+
+    buildCommand: bash render-build.sh && pip install -r requirements.txt
     buildFilter:
       paths:
         - ./
